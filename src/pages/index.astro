@@ -25,22 +25,8 @@ const facilities = [
 
   <!-- Hero Section with Slideshow -->
   <section class="relative h-screen">
-    <!-- Video Background (hidden on mobile) -->
-    <div class="absolute inset-0 z-0 hidden lg:block">
-      <video
-        autoplay
-        muted
-        loop
-        playsinline
-        class="w-full h-full object-cover"
-      >
-        <source src="/videos/hero-drone.mp4" type="video/mp4" />
-      </video>
-      <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
-    </div>
-
-    <!-- Image Slideshow (visible on mobile, fallback on desktop) -->
-    <div class="absolute inset-0 z-0 lg:hidden" id="hero-slideshow">
+    <!-- Image Slideshow -->
+    <div class="absolute inset-0 z-0" id="hero-slideshow">
       {heroSlides.map((slide, i) => (
         <div class={`absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`} data-slide={i}>
           <img
@@ -83,7 +69,7 @@ const facilities = [
     </div>
 
     <!-- Slide Indicators -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 lg:hidden">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
       {heroSlides.map((_, i) => (
         <button
           class={`w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
@@ -92,12 +78,6 @@ const facilities = [
       ))}
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden lg:block">
-      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-      </svg>
-    </div>
   </section>
 
   <!-- Quick Info Bar -->
