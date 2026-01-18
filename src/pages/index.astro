@@ -2,128 +2,208 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+
+const heroSlides = [
+  { src: '/images/01-hero-sauna-frau.jpg', alt: 'Relax in our Sauna' },
+  { src: '/images/04-pool-frau-rueckansicht.jpg', alt: 'Pool with a View' },
+  { src: '/images/09-pool-nacht.jpg', alt: 'Pool at Night' },
+  { src: '/images/12-liegestuehle-sonnenuntergang.jpg', alt: 'Sunset Relaxation' },
+];
+
+const facilities = [
+  { src: '/images/05-sauna-led-beleuchtung.jpg', title: 'Finnish Sauna', desc: 'With LED ambiance lighting' },
+  { src: '/images/11-steam-room.jpg', title: 'Steam Room', desc: 'Relaxing steam experience' },
+  { src: '/images/06-hot-cold-onsen.jpg', title: 'Hot & Cold Onsen', desc: '39°C hot / 15°C cold' },
+  { src: '/images/08-ice-bath-gast.jpg', title: 'Ice Bath', desc: 'Real ice, below 7°C' },
+  { src: '/images/04-pool-frau-rueckansicht.jpg', title: 'Swimming Pool', desc: 'Refresh and relax' },
+  { src: '/images/07-restaurant-terrasse.jpg', title: 'Restaurant', desc: 'Thai & European cuisine' },
+];
 ---
 
-<Layout title="Home" description="Hera Sauna - The Only Authentic German Aufguss in Thailand. Experience traditional German sauna culture in paradise.">
+<Layout title="Home" description="Hera Sauna Pattaya - Experience authentic sauna sessions with our signature Aufguss ritual. The only event sauna in Thailand.">
   <Navigation />
 
-  <!-- Hero Section -->
-  <section class="relative h-screen flex items-center justify-center">
-    <!-- Hero Image Background -->
-    <div class="absolute inset-0 z-0">
-      <img
-        src="/images/01-hero-sauna-frau.jpg"
-        alt="Hera Sauna"
+  <!-- Hero Section with Slideshow -->
+  <section class="relative h-screen">
+    <!-- Video Background (hidden on mobile) -->
+    <div class="absolute inset-0 z-0 hidden lg:block">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
         class="w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-stone-900/60 via-stone-900/40 to-stone-900/80"></div>
+      >
+        <source src="/videos/hero-drone.mp4" type="video/mp4" />
+      </video>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
+    </div>
+
+    <!-- Image Slideshow (visible on mobile, fallback on desktop) -->
+    <div class="absolute inset-0 z-0 lg:hidden" id="hero-slideshow">
+      {heroSlides.map((slide, i) => (
+        <div class={`absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`} data-slide={i}>
+          <img
+            src={slide.src}
+            alt={slide.alt}
+            class="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50"></div>
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 text-center text-white px-4 max-w-4xl">
-      <img src="/images/logo.png" alt="Hera Sauna" class="h-32 md:h-48 w-auto mx-auto mb-6" />
-      <p class="text-xl md:text-2xl text-stone-200 mb-4">
-        The Only Authentic German Aufguss in Thailand
-      </p>
-      <p class="text-lg text-bronze-400 font-medium mb-8">
-        Aufguss Daily: 13:00 | 14:00 | 16:00 | 19:30
-      </p>
-      <a
-        href="/kontakt"
-        class="inline-block bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200"
-      >
-        Visit Us
-      </a>
+    <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
+      <div class="text-center max-w-4xl">
+        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 drop-shadow-lg">
+          <span class="text-bronze-400">HERA</span> SAUNA
+        </h1>
+        <p class="text-xl md:text-2xl text-white/90 mb-2 drop-shadow-md">
+          Pattaya's Premier Wellness Destination
+        </p>
+        <p class="text-lg text-bronze-300 font-medium mb-8 drop-shadow-md">
+          Sessions Daily: 13:00 | 14:00 | 16:00 | 19:30
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="/kontakt"
+            class="bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg"
+          >
+            Visit Us Today
+          </a>
+          <a
+            href="/sessions"
+            class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg transition-all duration-200 border border-white/30"
+          >
+            Learn About Sessions
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide Indicators -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 lg:hidden">
+      {heroSlides.map((_, i) => (
+        <button
+          class={`w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
+          data-indicator={i}
+        ></button>
+      ))}
     </div>
 
     <!-- Scroll Indicator -->
-    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden lg:block">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
     </div>
   </section>
 
-  <!-- Unique Selling Point Section -->
-  <section class="py-20 bg-stone-100">
+  <!-- Quick Info Bar -->
+  <section class="bg-bronze-500 py-4">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="flex flex-wrap justify-center gap-8 text-white text-center">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-medium">Open 9:00 - 22:00</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <span class="font-medium">Entry: 220 Baht</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          </svg>
+          <span class="font-medium">Pattaya, Thailand</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Makes Us Special -->
+  <section class="py-20 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-4xl font-serif font-bold text-stone-800 mb-4">
-          German Sauna Culture in Paradise
+          Thailand's Only Event Sauna
         </h2>
         <p class="text-lg text-stone-600 max-w-2xl mx-auto">
-          Experience the authentic German Aufguss ritual - a centuries-old tradition brought to the heart of Thailand.
+          Experience our signature sauna sessions - a traditional ritual brought to paradise.
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Feature 1 -->
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-stone-800 mb-3">Authentic Aufguss</h3>
+          <h3 class="text-xl font-semibold text-stone-800 mb-3">Signature Sessions</h3>
           <p class="text-stone-600">
-            Traditional German infusion ceremony with premium essential oils and expert technique.
+            Traditional infusion ceremony with premium essential oils and expert technique.
           </p>
         </div>
 
-        <!-- Feature 2 -->
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-stone-800 mb-3">Daily Sessions</h3>
+          <h3 class="text-xl font-semibold text-stone-800 mb-3">4 Daily Sessions</h3>
           <p class="text-stone-600">
-            Four Aufguss sessions every day at 13:00, 14:00, 16:00, and 19:30.
+            Sessions at 13:00, 14:00, 16:00, and 19:30 - all included in your entry.
           </p>
         </div>
 
-        <!-- Feature 3 -->
-        <div class="bg-white p-8 rounded-xl shadow-lg text-center">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
             </svg>
           </div>
-          <h3 class="text-xl font-semibold text-stone-800 mb-3">Restaurant & Bar</h3>
+          <h3 class="text-xl font-semibold text-stone-800 mb-3">Complete Wellness</h3>
           <p class="text-stone-600">
-            Enjoy delicious food and refreshing drinks before or after your sauna experience.
+            Sauna, steam room, onsen pools, ice bath, swimming pool & restaurant.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Aufguss Highlight Section -->
+  <!-- Session Highlight -->
   <section class="py-20 bg-stone-800 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div>
+          <p class="text-bronze-400 font-medium mb-2 uppercase tracking-wide">Our Signature Experience</p>
           <h2 class="text-4xl font-serif font-bold mb-6">
-            What is <span class="text-bronze-400">Aufguss</span>?
+            What is a Sauna Session?
           </h2>
           <p class="text-stone-300 text-lg mb-6">
-            Aufguss is a traditional German sauna ritual where a sauna master pours water infused with essential oils onto hot stones, then uses a towel to distribute the aromatic steam throughout the sauna.
+            Our sessions are based on the traditional Aufguss - a beloved ritual from Germany that has become the gold standard of sauna culture in Europe.
           </p>
           <p class="text-stone-300 text-lg mb-8">
-            This ritual intensifies the sauna experience, creating waves of heat and fragrance that promote deep relaxation and wellbeing.
+            A trained sauna master pours water with essential oils onto hot stones, then uses towel-waving techniques to create waves of aromatic heat - an experience that deeply relaxes body and mind.
           </p>
-          <a href="/aufguss" class="inline-block border-2 border-bronze-400 text-bronze-400 hover:bg-bronze-400 hover:text-stone-900 px-6 py-3 rounded-lg transition-colors duration-200 font-semibold">
-            Learn More
+          <a href="/sessions" class="inline-block border-2 border-bronze-400 text-bronze-400 hover:bg-bronze-400 hover:text-stone-900 px-6 py-3 rounded-lg transition-colors duration-200 font-semibold">
+            Learn More About Sessions
           </a>
         </div>
         <div class="relative">
           <img
             src="/images/03-aufguss-frau-kelle.jpg"
-            alt="Aufguss Ceremony"
-            class="rounded-xl shadow-2xl"
+            alt="Sauna Session"
+            class="rounded-2xl shadow-2xl"
           />
-          <div class="absolute -bottom-6 -right-6 bg-bronze-500 text-stone-900 p-6 rounded-xl shadow-lg">
+          <div class="absolute -bottom-6 -right-6 bg-bronze-500 text-white p-6 rounded-xl shadow-lg">
             <p class="text-3xl font-bold">4x</p>
             <p class="text-sm font-medium">Daily Sessions</p>
           </div>
@@ -132,7 +212,7 @@ import Footer from '../components/Footer.astro';
     </div>
   </section>
 
-  <!-- Facilities Section -->
+  <!-- Facilities Grid -->
   <section class="py-20 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
@@ -144,99 +224,126 @@ import Footer from '../components/Footer.astro';
         </p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Sauna -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/05-sauna-led-beleuchtung.jpg" alt="Sauna" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Sauna</h3>
-              <p class="text-stone-300 text-sm">Traditional Finnish sauna with LED ambiance</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {facilities.map((facility) => (
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg aspect-[4/3]">
+            <img
+              src={facility.src}
+              alt={facility.title}
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end">
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-white">{facility.title}</h3>
+                <p class="text-stone-300 text-sm">{facility.desc}</p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Steam Room -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/11-steam-room.jpg" alt="Steam Room" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Steam Room</h3>
-              <p class="text-stone-300 text-sm">Relaxing steam bath experience</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hot & Cold Onsen -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/06-hot-cold-onsen.jpg" alt="Hot & Cold Onsen" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Hot & Cold Onsen</h3>
-              <p class="text-stone-300 text-sm">39°C hot / 15°C cold pools</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ice Bath -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/08-ice-bath-gast.jpg" alt="Ice Bath" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Ice Bath</h3>
-              <p class="text-stone-300 text-sm">Real ice, below 7°C</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Swimming Pool -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/09-pool-nacht.jpg" alt="Swimming Pool" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Swimming Pool</h3>
-              <p class="text-stone-300 text-sm">Refresh and relax poolside</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Restaurant -->
-        <div class="group relative overflow-hidden rounded-xl shadow-lg">
-          <img src="/images/07-restaurant-terrasse.jpg" alt="Restaurant" class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300" />
-          <div class="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white">Restaurant</h3>
-              <p class="text-stone-300 text-sm">Thai & European cuisine</p>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div class="text-center mt-12">
         <a href="/galerie" class="inline-block border-2 border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white px-6 py-3 rounded-lg transition-colors duration-200 font-semibold">
-          View Gallery
+          View Full Gallery
         </a>
       </div>
     </div>
   </section>
 
-  <!-- CTA Section -->
-  <section class="py-20 bg-bronze-500">
+  <!-- Testimonial/Review Style Section -->
+  <section class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-4xl font-serif font-bold text-stone-900 mb-6">
-        Ready to Experience Authentic German Sauna Culture?
+      <div class="mb-8">
+        <div class="flex justify-center gap-1 text-bronze-500 text-2xl mb-4">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <blockquote class="text-2xl md:text-3xl font-serif text-stone-800 italic mb-6">
+          "The best sauna experience in Thailand. The sessions are incredible - you can tell they really know what they're doing!"
+        </blockquote>
+        <p class="text-stone-600">— Happy Guest from Germany</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="relative py-24 overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src="/images/12-liegestuehle-sonnenuntergang.jpg"
+        alt="Sunset at Hera Sauna"
+        class="w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-stone-900/70"></div>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
+      <h2 class="text-4xl font-serif font-bold mb-6">
+        Ready for Ultimate Relaxation?
       </h2>
-      <p class="text-xl text-stone-800 mb-8">
-        Visit us today and discover why Hera Sauna is the best sauna experience in Thailand.
+      <p class="text-xl text-stone-200 mb-8">
+        Visit us today and discover why Hera Sauna is Pattaya's best-kept wellness secret.
       </p>
-      <a
-        href="/kontakt"
-        class="inline-block bg-stone-900 hover:bg-stone-800 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200"
-      >
-        Get Directions
-      </a>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a
+          href="/kontakt"
+          class="bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200"
+        >
+          Get Directions
+        </a>
+        <a
+          href="tel:+66628352395"
+          class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white font-semibold px-8 py-4 rounded-lg transition-colors border border-white/30"
+        >
+          Call Us: +66 62-835-2395
+        </a>
+      </div>
     </div>
   </section>
 
   <Footer />
 </Layout>
+
+<script>
+  // Hero Slideshow
+  const slides = document.querySelectorAll('[data-slide]');
+  const indicators = document.querySelectorAll('[data-indicator]');
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+
+  function showSlide(index: number) {
+    slides.forEach((slide, i) => {
+      if (i === index) {
+        slide.classList.remove('opacity-0');
+        slide.classList.add('opacity-100');
+      } else {
+        slide.classList.remove('opacity-100');
+        slide.classList.add('opacity-0');
+      }
+    });
+
+    indicators.forEach((indicator, i) => {
+      if (i === index) {
+        indicator.classList.add('bg-white', 'w-8');
+        indicator.classList.remove('bg-white/50');
+      } else {
+        indicator.classList.remove('bg-white', 'w-8');
+        indicator.classList.add('bg-white/50');
+      }
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    showSlide(currentSlide);
+  }
+
+  // Auto-advance slides
+  setInterval(nextSlide, 5000);
+
+  // Click indicators
+  indicators.forEach((indicator, i) => {
+    indicator.addEventListener('click', () => {
+      currentSlide = i;
+      showSlide(currentSlide);
+    });
+  });
+</script>
