@@ -3,16 +3,19 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 
-// Placeholder images - these will be replaced with actual images
 const images = [
-  { src: '/images/gallery/1.jpg', alt: 'Hera Sauna Interior' },
-  { src: '/images/gallery/2.jpg', alt: 'Sauna Room' },
-  { src: '/images/gallery/3.jpg', alt: 'Relaxation Area' },
-  { src: '/images/gallery/4.jpg', alt: 'Pool Area' },
-  { src: '/images/gallery/5.jpg', alt: 'Restaurant' },
-  { src: '/images/gallery/6.jpg', alt: 'Aufguss Ceremony' },
-  { src: '/images/gallery/7.jpg', alt: 'Exterior View' },
-  { src: '/images/gallery/8.jpg', alt: 'Evening Atmosphere' },
+  { src: '/images/01-hero-sauna-frau.jpg', alt: 'Sauna Experience' },
+  { src: '/images/02-sauna-frau-sitzend.jpg', alt: 'Relaxing in Sauna' },
+  { src: '/images/03-aufguss-frau-kelle.jpg', alt: 'Aufguss Ceremony' },
+  { src: '/images/05-sauna-led-beleuchtung.jpg', alt: 'Sauna with LED Lighting' },
+  { src: '/images/11-steam-room.jpg', alt: 'Steam Room' },
+  { src: '/images/06-hot-cold-onsen.jpg', alt: 'Hot & Cold Onsen' },
+  { src: '/images/08-ice-bath-gast.jpg', alt: 'Ice Bath Experience' },
+  { src: '/images/09-pool-nacht.jpg', alt: 'Swimming Pool at Night' },
+  { src: '/images/10-garden-sonnenschirme.jpg', alt: 'Garden Area' },
+  { src: '/images/07-restaurant-terrasse.jpg', alt: 'Restaurant Terrace' },
+  { src: '/images/12-liegestuehle-sonnenuntergang.jpg', alt: 'Relaxation Area' },
+  { src: '/images/04-pool-frau-rueckansicht.jpg', alt: 'Pool View' },
 ];
 ---
 
@@ -35,7 +38,7 @@ const images = [
   <section class="py-20 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {images.map((image, index) => (
+        {images.map((image) => (
           <div class="relative overflow-hidden rounded-xl shadow-lg group aspect-[4/3]">
             <img
               src={image.src}
@@ -51,22 +54,18 @@ const images = [
     </div>
   </section>
 
-  <!-- Video Section -->
-  <section class="py-20 bg-stone-800">
+  <!-- CTA -->
+  <section class="py-16 bg-amber-500">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <h2 class="text-4xl font-serif font-bold text-white mb-8">
-        Experience <span class="text-amber-400">Hera Sauna</span>
+      <h2 class="text-3xl font-serif font-bold text-stone-900 mb-4">
+        Experience It Yourself
       </h2>
-      <div class="aspect-video rounded-xl overflow-hidden shadow-2xl">
-        <video
-          controls
-          poster="/images/video-poster.jpg"
-          class="w-full h-full object-cover"
-        >
-          <source src="/videos/hera-sauna.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      </div>
+      <p class="text-lg text-stone-800 mb-6">
+        Pictures can only show so much. Come visit us for the full experience!
+      </p>
+      <a href="/kontakt" class="inline-block bg-stone-900 hover:bg-stone-800 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200">
+        Get Directions
+      </a>
     </div>
   </section>
 
