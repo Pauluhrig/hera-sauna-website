@@ -1,0 +1,64 @@
+---
+const navItems = [
+  { name: 'Home', href: '/' },
+  { name: 'Aufguss', href: '/aufguss' },
+  { name: 'Speisekarte', href: '/menu' },
+  { name: 'Galerie', href: '/galerie' },
+  { name: 'Preise', href: '/preise' },
+  { name: 'Kontakt', href: '/kontakt' },
+];
+---
+
+<nav class="fixed w-full z-50 bg-stone-900/90 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center">
+        <span class="text-2xl font-serif font-bold text-amber-400">HERA</span>
+        <span class="text-2xl font-serif text-white ml-2">SAUNA</span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-stone-200 hover:text-amber-400 transition-colors duration-200 font-medium"
+          >
+            {item.name}
+          </a>
+        ))}
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="md:hidden text-white">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-stone-900">
+    <div class="px-4 py-4 space-y-3">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class="block text-stone-200 hover:text-amber-400 py-2"
+        >
+          {item.name}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  btn?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden');
+  });
+</script>

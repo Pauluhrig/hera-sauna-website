@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Output
+dist/
+.astro/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large files (will be handled by git lfs or external hosting)
+*.mp4
+*.mov

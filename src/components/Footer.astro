@@ -1,0 +1,38 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-stone-900 text-stone-300">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Brand -->
+      <div>
+        <h3 class="text-2xl font-serif font-bold text-amber-400 mb-4">HERA SAUNA</h3>
+        <p class="text-stone-400">
+          The Only Authentic German Aufguss in Thailand
+        </p>
+      </div>
+
+      <!-- Öffnungszeiten -->
+      <div>
+        <h4 class="text-lg font-semibold text-white mb-4">Öffnungszeiten</h4>
+        <p class="text-stone-400">Täglich: 10:00 - 22:00</p>
+        <p class="text-amber-400 mt-2 font-medium">Aufguss Zeiten:</p>
+        <p class="text-stone-400">13:00 | 14:00 | 16:00 | 19:30</p>
+      </div>
+
+      <!-- Kontakt -->
+      <div>
+        <h4 class="text-lg font-semibold text-white mb-4">Kontakt</h4>
+        <p class="text-stone-400">Thailand</p>
+        <a href="https://hera-sauna.com" class="text-amber-400 hover:text-amber-300">
+          hera-sauna.com
+        </a>
+      </div>
+    </div>
+
+    <div class="border-t border-stone-700 mt-8 pt-8 text-center text-stone-500">
+      <p>&copy; {currentYear} Hera Sauna. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

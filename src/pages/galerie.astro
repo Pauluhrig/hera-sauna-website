@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+
+// Placeholder images - these will be replaced with actual images
+const images = [
+  { src: '/images/gallery/1.jpg', alt: 'Hera Sauna Interior' },
+  { src: '/images/gallery/2.jpg', alt: 'Sauna Room' },
+  { src: '/images/gallery/3.jpg', alt: 'Relaxation Area' },
+  { src: '/images/gallery/4.jpg', alt: 'Pool Area' },
+  { src: '/images/gallery/5.jpg', alt: 'Restaurant' },
+  { src: '/images/gallery/6.jpg', alt: 'Aufguss Ceremony' },
+  { src: '/images/gallery/7.jpg', alt: 'Exterior View' },
+  { src: '/images/gallery/8.jpg', alt: 'Evening Atmosphere' },
+];
+---
+
+<Layout title="Galerie" description="Explore Hera Sauna Thailand through our photo gallery.">
+  <Navigation />
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 bg-stone-800 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h1 class="text-5xl font-serif font-bold mb-6">
+        <span class="text-amber-400">Galerie</span>
+      </h1>
+      <p class="text-xl text-stone-300">
+        Take a visual tour of Hera Sauna
+      </p>
+    </div>
+  </section>
+
+  <!-- Gallery Grid -->
+  <section class="py-20 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {images.map((image, index) => (
+          <div class="relative overflow-hidden rounded-xl shadow-lg group aspect-[4/3]">
+            <img
+              src={image.src}
+              alt={image.alt}
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+              <p class="text-white p-4 font-medium">{image.alt}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="py-20 bg-stone-800">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-4xl font-serif font-bold text-white mb-8">
+        Experience <span class="text-amber-400">Hera Sauna</span>
+      </h2>
+      <div class="aspect-video rounded-xl overflow-hidden shadow-2xl">
+        <video
+          controls
+          poster="/images/video-poster.jpg"
+          class="w-full h-full object-cover"
+        >
+          <source src="/videos/hera-sauna.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
