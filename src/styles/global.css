@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+/* Corporate Colors - Bronze/Copper from Logo */
+@theme {
+  --color-bronze-50: #faf6f1;
+  --color-bronze-100: #f0e6d9;
+  --color-bronze-200: #e0ccb3;
+  --color-bronze-300: #caa880;
+  --color-bronze-400: #b8875a;
+  --color-bronze-500: #a67c52;
+  --color-bronze-600: #8f6743;
+  --color-bronze-700: #755339;
+  --color-bronze-800: #624534;
+  --color-bronze-900: #543c2f;
+}
+
 /* Custom fonts */
 .font-serif {
   font-family: 'Playfair Display', serif;

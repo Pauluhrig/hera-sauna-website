@@ -14,8 +14,7 @@ const navItems = [
     <div class="flex justify-between items-center h-20">
       <!-- Logo -->
       <a href="/" class="flex items-center">
-        <span class="text-2xl font-serif font-bold text-amber-400">HERA</span>
-        <span class="text-2xl font-serif text-white ml-2">SAUNA</span>
+        <img src="/images/logo.jpg" alt="Hera Sauna" class="h-14 w-auto" />
       </a>
 
       <!-- Desktop Navigation -->
@@ -23,7 +22,7 @@ const navItems = [
         {navItems.map((item) => (
           <a
             href={item.href}
-            class="text-stone-200 hover:text-amber-400 transition-colors duration-200 font-medium"
+            class="text-stone-200 hover:text-bronze-400 transition-colors duration-200 font-medium"
           >
             {item.name}
           </a>
@@ -45,7 +44,7 @@ const navItems = [
       {navItems.map((item) => (
         <a
           href={item.href}
-          class="block text-stone-200 hover:text-amber-400 py-2"
+          class="block text-stone-200 hover:text-bronze-400 py-2"
         >
           {item.name}
         </a>
