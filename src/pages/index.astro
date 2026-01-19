@@ -36,15 +36,15 @@ const facilities = [
           />
         </div>
       ))}
-      <!-- Stronger overlay for text readability -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60"></div>
+      <!-- Lighter overlay for better image visibility -->
+      <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50"></div>
     </div>
 
     <!-- Hero Content -->
     <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
       <div class="text-center max-w-4xl">
-        <!-- Text with background blur for better readability -->
-        <div class="bg-black/30 backdrop-blur-sm rounded-2xl px-8 py-10 md:px-12 md:py-12">
+        <!-- Text with background blur - animated on load -->
+        <div class="hero-content bg-black/40 backdrop-blur-sm rounded-2xl px-8 py-10 md:px-12 md:py-12">
           <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 hero-title">
             <span class="text-bronze-400">HERA</span> SAUNA
           </h1>
@@ -338,5 +338,21 @@ const facilities = [
   }
   .hero-title span {
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Hero content fade-in animation */
+  .hero-content {
+    animation: fadeInUp 1s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
