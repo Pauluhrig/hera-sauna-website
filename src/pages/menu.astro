@@ -2,16 +2,80 @@
 import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
+
+// Menu Categories
+const drinks = {
+  title: "Drinks",
+  icon: "🍹",
+  items: [
+    { name: "Chang Beer", price: "80", desc: "Thai classic lager" },
+    { name: "Singha Beer", price: "90", desc: "Premium Thai beer" },
+    { name: "Leo Beer", price: "70", desc: "Light and refreshing" },
+    { name: "Tiger Beer", price: "90", desc: "Asian lager" },
+    { name: "Heineken", price: "120", desc: "International premium" },
+    { name: "Soft Drinks", price: "40", desc: "Coke, Sprite, Fanta" },
+    { name: "Water", price: "20", desc: "Still or sparkling" },
+    { name: "Fresh Coconut", price: "60", desc: "Young coconut water" },
+    { name: "Thai Iced Tea", price: "50", desc: "Sweet and creamy" },
+    { name: "Fresh Juice", price: "70", desc: "Orange, Pineapple, Watermelon" },
+  ]
+};
+
+const thaiFood = {
+  title: "Thai Cuisine",
+  icon: "🍜",
+  items: [
+    { name: "Pad Thai", price: "120", desc: "Classic stir-fried rice noodles" },
+    { name: "Green Curry", price: "150", desc: "Spicy coconut curry with vegetables" },
+    { name: "Red Curry", price: "150", desc: "Rich and aromatic curry" },
+    { name: "Tom Yum Soup", price: "130", desc: "Hot and sour soup with prawns" },
+    { name: "Fried Rice", price: "100", desc: "Thai-style fried rice" },
+    { name: "Papaya Salad", price: "80", desc: "Som Tam - spicy green papaya" },
+    { name: "Massaman Curry", price: "160", desc: "Mild curry with potatoes" },
+    { name: "Basil Chicken", price: "120", desc: "Stir-fried with holy basil" },
+    { name: "Spring Rolls", price: "80", desc: "Crispy vegetable rolls (4 pcs)" },
+    { name: "Satay", price: "100", desc: "Grilled chicken skewers with peanut sauce" },
+  ]
+};
+
+const westernFood = {
+  title: "Western Dishes",
+  icon: "🍔",
+  items: [
+    { name: "Club Sandwich", price: "150", desc: "Triple-decker with fries" },
+    { name: "Cheeseburger", price: "180", desc: "Beef patty with cheese and fries" },
+    { name: "Fish & Chips", price: "200", desc: "Beer-battered fish with fries" },
+    { name: "Caesar Salad", price: "140", desc: "Romaine, parmesan, croutons" },
+    { name: "Spaghetti Bolognese", price: "160", desc: "Classic meat sauce pasta" },
+    { name: "Grilled Chicken", price: "180", desc: "With vegetables and rice" },
+    { name: "French Fries", price: "70", desc: "Crispy golden fries" },
+    { name: "Chicken Wings", price: "120", desc: "Crispy wings (6 pcs)" },
+  ]
+};
+
+const snacks = {
+  title: "Snacks & Light Bites",
+  icon: "🥗",
+  items: [
+    { name: "Mixed Nuts", price: "60", desc: "Roasted and salted" },
+    { name: "Edamame", price: "70", desc: "Steamed with sea salt" },
+    { name: "Fruit Platter", price: "100", desc: "Seasonal fresh fruits" },
+    { name: "Ice Cream", price: "60", desc: "Vanilla, Chocolate, Mango" },
+    { name: "Nachos", price: "120", desc: "With cheese and salsa" },
+  ]
+};
+
+const categories = [drinks, thaiFood, westernFood, snacks];
 ---
 
-<Layout title="Speisekarte" description="Discover our delicious food and drinks at Hera Sauna Thailand.">
+<Layout title="Menu" description="Discover our delicious food and drinks at Hera Sauna Pattaya - Thai and Western cuisine.">
   <Navigation />
 
   <!-- Hero -->
-  <section class="pt-32 pb-20 bg-stone-800 text-white">
+  <section class="pt-32 pb-16 bg-stone-800 text-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <h1 class="text-5xl font-serif font-bold mb-6">
-        <span class="text-bronze-400">Speisekarte</span>
+      <h1 class="text-5xl font-serif font-bold mb-4">
+        <span class="text-bronze-400">Menu</span>
       </h1>
       <p class="text-xl text-stone-300">
         Delicious food and refreshing drinks to complement your sauna experience
@@ -19,55 +83,99 @@ import Footer from '../components/Footer.astro';
     </div>
   </section>
 
-  <!-- Menu PDF Embed -->
-  <section class="py-20 bg-stone-50">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div class="p-8 text-center border-b border-stone-200">
-          <h2 class="text-3xl font-serif font-bold text-stone-800 mb-4">Our Menu</h2>
-          <p class="text-stone-600 mb-6">
-            Browse our full menu below or download it for offline viewing.
-          </p>
-          <a
-            href="/menu/Menu.pdf"
-            download
-            class="inline-block bg-bronze-500 hover:bg-bronze-600 text-stone-900 font-semibold px-6 py-3 rounded-lg transition-colors duration-200"
-          >
-            Download Menu (PDF)
-          </a>
+  <!-- Quick Info -->
+  <section class="bg-bronze-500 py-4">
+    <div class="max-w-4xl mx-auto px-4">
+      <div class="flex flex-wrap justify-center gap-8 text-white text-center">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-medium">Kitchen: 10:00 - 19:00</span>
         </div>
-
-        <!-- PDF Viewer -->
-        <div class="aspect-[3/4] w-full">
-          <iframe
-            src="/menu/Menu.pdf"
-            class="w-full h-full"
-            title="Hera Sauna Menu"
-          ></iframe>
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span class="font-medium">Bar: 10:00 - 22:00</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Quick Info -->
-  <section class="py-16 bg-bronze-500">
-    <div class="max-w-4xl mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div>
-          <h3 class="text-xl font-bold text-stone-900 mb-2">Kitchen Hours</h3>
-          <p class="text-stone-800">10:00 - 21:00</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-stone-900 mb-2">Bar Hours</h3>
-          <p class="text-stone-800">10:00 - 22:00</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-bold text-stone-900 mb-2">Fresh & Local</h3>
-          <p class="text-stone-800">Daily prepared dishes</p>
-        </div>
+  <!-- Menu Navigation -->
+  <section class="sticky top-20 z-40 bg-white shadow-md">
+    <div class="max-w-5xl mx-auto px-4">
+      <div class="flex justify-center gap-2 py-3 overflow-x-auto">
+        {categories.map((cat) => (
+          <a
+            href={`#${cat.title.toLowerCase().replace(' ', '-')}`}
+            class="px-4 py-2 rounded-full bg-stone-100 hover:bg-bronze-100 text-stone-700 hover:text-bronze-700 font-medium text-sm whitespace-nowrap transition-colors"
+          >
+            {cat.icon} {cat.title}
+          </a>
+        ))}
       </div>
+    </div>
+  </section>
+
+  <!-- Menu Sections -->
+  <section class="py-12 bg-stone-50">
+    <div class="max-w-5xl mx-auto px-4">
+      {categories.map((category) => (
+        <div id={category.title.toLowerCase().replace(' ', '-')} class="mb-16 scroll-mt-32">
+          <div class="flex items-center gap-3 mb-8">
+            <span class="text-4xl">{category.icon}</span>
+            <h2 class="text-3xl font-serif font-bold text-stone-800">{category.title}</h2>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {category.items.map((item) => (
+              <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex justify-between items-start">
+                <div class="flex-1">
+                  <h3 class="font-semibold text-stone-800 text-lg">{item.name}</h3>
+                  <p class="text-stone-500 text-sm mt-1">{item.desc}</p>
+                </div>
+                <div class="ml-4 text-right">
+                  <span class="text-bronze-600 font-bold text-lg">{item.price}</span>
+                  <span class="text-stone-400 text-sm ml-1">฿</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <!-- Note -->
+      <div class="bg-bronze-50 border border-bronze-200 rounded-xl p-6 text-center">
+        <p class="text-bronze-800">
+          <strong>Note:</strong> Prices are in Thai Baht (฿). Menu items may vary based on availability.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 bg-stone-800 text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-serif font-bold mb-4">
+        Hungry After Your Sauna Session?
+      </h2>
+      <p class="text-lg text-stone-300 mb-6">
+        Our restaurant serves fresh, delicious food daily. Come relax and refuel!
+      </p>
+      <a href="/kontakt" class="inline-block bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-200">
+        Visit Us
+      </a>
     </div>
   </section>
 
   <Footer />
 </Layout>
+
+<style>
+  /* Smooth scroll */
+  html {
+    scroll-behavior: smooth;
+  }
+</style>
