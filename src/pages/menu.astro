@@ -3,82 +3,213 @@ import Layout from '../layouts/Layout.astro';
 import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 
-// Menu Categories
-const drinks = {
-  title: "Drinks",
-  icon: "🍹",
+// Thai Main Dishes
+const thaiMain = {
+  title: "Thai Main Dishes",
+  titleThai: "อาหารจานเดียว",
   items: [
-    { name: "Chang Beer", price: "80", desc: "Thai classic lager" },
-    { name: "Singha Beer", price: "90", desc: "Premium Thai beer" },
-    { name: "Leo Beer", price: "70", desc: "Light and refreshing" },
-    { name: "Tiger Beer", price: "90", desc: "Asian lager" },
-    { name: "Heineken", price: "120", desc: "International premium" },
-    { name: "Soft Drinks", price: "40", desc: "Coke, Sprite, Fanta" },
-    { name: "Water", price: "20", desc: "Still or sparkling" },
-    { name: "Fresh Coconut", price: "60", desc: "Young coconut water" },
-    { name: "Thai Iced Tea", price: "50", desc: "Sweet and creamy" },
-    { name: "Fresh Juice", price: "70", desc: "Orange, Pineapple, Watermelon" },
+    { name: "Pad Krapao", nameThai: "ข้าวผัดกะเพรา", price: "90", desc: "Fried meat with Thai Basil", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-1-X12.jpg" },
+    { name: "Fried Rice", nameThai: "ข้าวผัด", price: "90", desc: "Thai-style fried rice", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-1-X14.jpg" },
+    { name: "Garlic Fried Meat", nameThai: "เนื้อสัตว์ทอดกระเทียม", price: "90", desc: "Fried meat with garlic", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-1-X16.jpg" },
+    { name: "Sweet & Sour", nameThai: "ผัดเปรี้ยวหวานราดข้าว", price: "100", desc: "Fried sweet sour with rice", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-1-X18.jpg" },
+    { name: "Stir-fried Vegetables", nameThai: "ผัดผักราดข้าว", price: "100", desc: "Fried vegetables with rice", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-1-X20.jpg" },
+    { name: "Thai Omelet", nameThai: "ไข่เจียว", price: "100", desc: "Thai omelet with rice", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-2-X12.jpg" },
   ]
 };
 
-const thaiFood = {
-  title: "Thai Cuisine",
-  icon: "🍜",
+// Soups
+const soups = {
+  title: "Soups",
+  titleThai: "ซุป",
   items: [
-    { name: "Pad Thai", price: "120", desc: "Classic stir-fried rice noodles" },
-    { name: "Green Curry", price: "150", desc: "Spicy coconut curry with vegetables" },
-    { name: "Red Curry", price: "150", desc: "Rich and aromatic curry" },
-    { name: "Tom Yum Soup", price: "130", desc: "Hot and sour soup with prawns" },
-    { name: "Fried Rice", price: "100", desc: "Thai-style fried rice" },
-    { name: "Papaya Salad", price: "80", desc: "Som Tam - spicy green papaya" },
-    { name: "Massaman Curry", price: "160", desc: "Mild curry with potatoes" },
-    { name: "Basil Chicken", price: "120", desc: "Stir-fried with holy basil" },
-    { name: "Spring Rolls", price: "80", desc: "Crispy vegetable rolls (4 pcs)" },
-    { name: "Satay", price: "100", desc: "Grilled chicken skewers with peanut sauce" },
+    { name: "Tom Yum", nameThai: "ต้มยำ", price: "160", desc: "Hot and sour soup", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-2-X20.jpg" },
+    { name: "Tom Kha Kai", nameThai: "ต้มข่าไก่", price: "140", desc: "Coconut chicken soup", img: "/images/menu/dish-2-X18.jpg" },
+    { name: "Clear Soup", nameThai: "ต้มจืด", price: "130", desc: "Clear broth soup", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-2-X14.jpg" },
+    { name: "Rice Soup", nameThai: "ข้าวต้ม", price: "80", desc: "Thai rice porridge", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-4-X12.jpg" },
   ]
 };
 
-const westernFood = {
-  title: "Western Dishes",
-  icon: "🍔",
+// Curries
+const curries = {
+  title: "Curries",
+  titleThai: "แกง",
   items: [
-    { name: "Club Sandwich", price: "150", desc: "Triple-decker with fries" },
-    { name: "Cheeseburger", price: "180", desc: "Beef patty with cheese and fries" },
-    { name: "Fish & Chips", price: "200", desc: "Beer-battered fish with fries" },
-    { name: "Caesar Salad", price: "140", desc: "Romaine, parmesan, croutons" },
-    { name: "Spaghetti Bolognese", price: "160", desc: "Classic meat sauce pasta" },
-    { name: "Grilled Chicken", price: "180", desc: "With vegetables and rice" },
-    { name: "French Fries", price: "70", desc: "Crispy golden fries" },
-    { name: "Chicken Wings", price: "120", desc: "Crispy wings (6 pcs)" },
+    { name: "Green Curry", nameThai: "แกงเขียวหวาน", price: "150", desc: "Spicy green coconut curry", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-3-X12.jpg" },
+    { name: "Massaman Curry", nameThai: "แกงมัสมั่นไก่", price: "150", desc: "Mild curry with potatoes & chicken", img: "/images/menu/dish-3-X14.jpg" },
+    { name: "Panaeng Curry", nameThai: "แกงพะแนง", price: "150", desc: "Rich peanut curry", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-3-X16.jpg" },
   ]
 };
 
+// Noodles
+const noodles = {
+  title: "Noodles",
+  titleThai: "ก๋วยเตี๋ยว",
+  items: [
+    { name: "Pad Thai", nameThai: "ผัดไทย", price: "100", desc: "Classic stir-fried rice noodles", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-4-X14.jpg" },
+    { name: "Pad Se-ew", nameThai: "ผัดซีอิ๊ว", price: "100", desc: "Stir-fried flat noodles with soy", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-4-X16.jpg" },
+    { name: "Thai Sukiyaki", nameThai: "สุกี้แห้ง/น้ำ", price: "100", desc: "Dry or soup style", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-4-X18.jpg" },
+    { name: "Fried Tom Yum Noodles", nameThai: "ผัดมาม่าต้มยำ", price: "100", desc: "Tom Yum instant noodles", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-4-X20.jpg" },
+    { name: "Fried Instant Noodles", nameThai: "มาม่าผัด", price: "90", desc: "Stir-fried instant noodles", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-5-X12.jpg" },
+    { name: "Basil Instant Noodles", nameThai: "มาม่าผัดกะเพรา", price: "130", desc: "Instant noodles with Thai basil", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-5-X14.jpg" },
+    { name: "Red Curry Noodles", nameThai: "ผัดพริกแกง", price: "100", desc: "Fried with red curry paste", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-5-X16.jpg" },
+    { name: "Spaghetti Kee Mao", nameThai: "สปาเกตตี้ผัดขี้เมา", price: "100", desc: "Spicy drunken spaghetti", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-5-X18.jpg" },
+    { name: "Curry Powder Stir-fry", nameThai: "ผัดผงกะหรี่", price: "140", desc: "Fried with curry powder", options: "Pork / Chicken / Shrimp +30 / Squid +30", img: "/images/menu/dish-5-X20.jpg" },
+  ]
+};
+
+// Salads
+const salads = {
+  title: "Thai Salads",
+  titleThai: "ยำ",
+  items: [
+    { name: "Glass Noodle Salad", nameThai: "ยำวุ้นเส้น", price: "120", desc: "Spicy glass noodle salad", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-6-X12.jpg" },
+    { name: "Papaya Salad", nameThai: "ส้มตำไทย/ปลาร้า", price: "120", desc: "Som Tam with dried shrimp & peanuts", img: "/images/menu/dish-6-X14.jpg" },
+    { name: "Thai Sausage Salad", nameThai: "ยำหมูยอ", price: "120", desc: "Spicy Thai sausage salad", img: "/images/menu/dish-6-X16.jpg" },
+    { name: "Larb", nameThai: "ลาบ", price: "120", desc: "Spicy minced meat salad", options: "Pork / Chicken", img: "/images/menu/dish-6-X18.jpg" },
+    { name: "Instant Noodle Salad", nameThai: "ยำมาม่า", price: "120", desc: "Spicy instant noodle salad", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-6-X20.jpg" },
+  ]
+};
+
+// Snacks & Appetizers
 const snacks = {
-  title: "Snacks & Light Bites",
-  icon: "🥗",
+  title: "Snacks & Appetizers",
+  titleThai: "ของทานเล่น",
   items: [
-    { name: "Mixed Nuts", price: "60", desc: "Roasted and salted" },
-    { name: "Edamame", price: "70", desc: "Steamed with sea salt" },
-    { name: "Fruit Platter", price: "100", desc: "Seasonal fresh fruits" },
-    { name: "Ice Cream", price: "60", desc: "Vanilla, Chocolate, Mango" },
-    { name: "Nachos", price: "120", desc: "With cheese and salsa" },
+    { name: "Gyoza", nameThai: "เกี๊ยวซ่า", price: "90", desc: "8 pcs pork & chicken dumplings with sauce", img: "/images/menu/dish-7-X12.jpg" },
+    { name: "Chicken Nuggets", nameThai: "นักเก็ต", price: "100", desc: "9 pieces with sweet sauce", img: "/images/menu/dish-7-X14.jpg" },
+    { name: "Fried Chicken Wings", nameThai: "ปีกไก่ทอด", price: "100", desc: "6 crispy wings", img: "/images/menu/dish-7-X16.jpg" },
+    { name: "French Fries", nameThai: "เฟรนฟราย", price: "90", desc: "Crispy golden fries", img: "/images/menu/dish-7-X18.jpg" },
+    { name: "Cheese Balls", nameThai: "ชีสบอล", price: "90", desc: "7 pieces of cheese balls", img: "/images/menu/dish-7-X20.jpg" },
+    { name: "Fried Shrimp", nameThai: "กุ้งชุบแป้งทอด", price: "160", desc: "Battered fried shrimp", img: "/images/menu/dish-2-X16.jpg" },
   ]
 };
 
-const categories = [drinks, thaiFood, westernFood, snacks];
+// Western Dishes
+const western = {
+  title: "Western Dishes",
+  titleThai: "อาหารฝรั่ง",
+  items: [
+    { name: "German Curry Sausage", nameThai: "ไส้กรอกเยอรมัน + เคอร์รีซอส", price: "190", desc: "With fries", img: "/images/menu/dish-8-X12.jpg" },
+    { name: "Hera Wrap", nameThai: "เฮรา แรป", price: "160", desc: "With fries", img: "/images/menu/dish-8-X14.jpg" },
+    { name: "Club Sandwich", nameThai: "คลับแซนวิช", price: "180", desc: "Triple-decker with fries", img: "/images/menu/dish-8-X16.jpg" },
+    { name: "Fish & Chips", nameThai: "ฟิชแอนด์ชิพ", price: "140", desc: "Beer-battered fish with fries", img: "/images/menu/dish-8-X18.jpg" },
+    { name: "Grilled Chicken Breast", nameThai: "อกไก่กริล + ไข่ดาว", price: "130", desc: "With 2 fried eggs and fries", img: "/images/menu/dish-7-X22.jpg" },
+  ]
+};
+
+// Spaghetti
+const spaghetti = {
+  title: "Spaghetti",
+  titleThai: "สปาเกตตี้",
+  items: [
+    { name: "Spaghetti Bolognese", nameThai: "สปาเกตตี้โบลองเนส", price: "130", desc: "Classic meat sauce", img: "/images/menu/dish-9-X12.jpg" },
+    { name: "Spaghetti with Bacon", nameThai: "สปาเกตตี้เบคอน", price: "140", desc: "Pork or chicken", img: "/images/menu/dish-9-X14.jpg" },
+    { name: "Garlic Prawns Spaghetti", nameThai: "สปาเกตตี้กุ้งกระเทียม", price: "180", desc: "With garlic prawns", img: "/images/menu/dish-9-X16.jpg" },
+    { name: "Pesto Spaghetti", nameThai: "สปาเกตตี้เพสโต้", price: "140", desc: "With basil pesto", options: "Pork / Chicken / Shrimp +20 / Squid +20", img: "/images/menu/dish-9-X18.jpg" },
+  ]
+};
+
+// Salads Western
+const saladsWestern = {
+  title: "Salads",
+  titleThai: "สลัด",
+  items: [
+    { name: "Caesar Salad", nameThai: "ซีซาร์สลัด", price: "180", desc: "With grilled chicken breast", img: "/images/menu/dish-10-X12.jpg" },
+    { name: "Hera Salad", nameThai: "เฮราสลัด", price: "180", desc: "With special Hera dressing", img: "/images/menu/dish-10-X14.jpg" },
+    { name: "Fruit Salad", nameThai: "สลัดผลไม้", price: "180", desc: "Fresh seasonal fruits", img: "/images/menu/dish-10-X16.jpg" },
+    { name: "Plate of Fruits", nameThai: "ผลไม้", price: "130", desc: "Watermelon, Pineapple, Mango, Banana", img: "/images/menu/dish-10-X18.jpg" },
+  ]
+};
+
+// Smoothies
+const smoothies = {
+  title: "Smoothies & Shakes",
+  titleThai: "สมูทตี้",
+  items: [
+    { name: "Apple Shake", price: "80" },
+    { name: "Banana Shake", price: "80" },
+    { name: "Mango Shake", price: "80" },
+    { name: "Watermelon Shake", price: "80" },
+    { name: "Pineapple Shake", price: "80" },
+    { name: "Lemon Shake", price: "80" },
+    { name: "Orange Shake", price: "80" },
+    { name: "Coconut Shake", price: "100" },
+  ]
+};
+
+// Coffee & Tea
+const drinks = {
+  title: "Coffee & Tea",
+  titleThai: "กาแฟ & ชา",
+  columns: ["HOT", "ICED", "BLENDED"],
+  items: [
+    { name: "Espresso", prices: ["60", "-", "-"] },
+    { name: "Cappuccino", prices: ["70", "80", "90"] },
+    { name: "Americano", prices: ["70", "80", "90"] },
+    { name: "Latte", prices: ["70", "80", "90"] },
+    { name: "Mocha", prices: ["70", "80", "90"] },
+    { name: "Orange Americano", prices: ["-", "120", "-"] },
+  ]
+};
+
+const teaMilk = {
+  title: "Tea & Milk",
+  titleThai: "ชา & นม",
+  columns: ["HOT", "ICED", "BLENDED"],
+  items: [
+    { name: "Thai Tea", nameThai: "ชาไทย", prices: ["70", "80", "90"] },
+    { name: "Green Tea", nameThai: "ชาเขียว", prices: ["70", "80", "90"] },
+    { name: "Lemon Tea", nameThai: "ชามะนาว", prices: ["70", "80", "90"] },
+    { name: "Chocolate", nameThai: "ช็อคโกแลต", prices: ["70", "80", "90"] },
+    { name: "Ovaltine", nameThai: "นมโอวัลติน", prices: ["70", "80", "90"] },
+    { name: "Fresh Milk", nameThai: "นมสด", prices: ["70", "80", "90"] },
+    { name: "Pink Milk", nameThai: "นมชมพู", prices: ["70", "80", "90"] },
+  ]
+};
+
+// Ice Cream
+const iceCream = {
+  title: "Ice Cream & Milkshakes",
+  titleThai: "ไอศกรีม",
+  items: [
+    { name: "1 Scoop", price: "55", desc: "Chocolate, Vanilla, or Strawberry" },
+    { name: "2 Scoops", price: "100", desc: "Chocolate, Vanilla, or Strawberry" },
+    { name: "Strawberry Sundae", price: "135" },
+    { name: "Chocolate Sundae", price: "135" },
+    { name: "Banana Split", price: "155" },
+    { name: "Vanilla Milkshake", price: "140" },
+    { name: "Chocolate Milkshake", price: "140" },
+    { name: "Strawberry Milkshake", price: "140" },
+    { name: "Caramel Milkshake", price: "140" },
+  ]
+};
+
+// Other drinks
+const otherDrinks = {
+  title: "Other Drinks",
+  titleThai: "เครื่องดื่มอื่นๆ",
+  items: [
+    { name: "Fresh Coconut", nameThai: "มะพร้าว", price: "79" },
+    { name: "Water", price: "20" },
+    { name: "Soft Drinks", price: "40", desc: "Coke, Sprite, Fanta" },
+  ]
+};
+
+const foodCategories = [thaiMain, soups, curries, noodles, salads, snacks, western, spaghetti, saladsWestern];
+const drinkCategories = [smoothies, drinks, teaMilk, iceCream, otherDrinks];
 ---
 
-<Layout title="Menu" description="Discover our delicious food and drinks at Hera Sauna Pattaya - Thai and Western cuisine.">
+<Layout title="Menu" description="Discover our delicious Thai and Western food at Hera Sauna Pattaya.">
   <Navigation />
 
   <!-- Hero -->
-  <section class="pt-32 pb-16 bg-stone-800 text-white">
+  <section class="pt-32 pb-12 bg-stone-800 text-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
       <h1 class="text-5xl font-serif font-bold mb-4">
         <span class="text-bronze-400">Menu</span>
       </h1>
       <p class="text-xl text-stone-300">
-        Delicious food and refreshing drinks to complement your sauna experience
+        Delicious Thai & Western cuisine to complement your sauna experience
       </p>
     </div>
   </section>
@@ -103,53 +234,187 @@ const categories = [drinks, thaiFood, westernFood, snacks];
     </div>
   </section>
 
-  <!-- Menu Navigation -->
+  <!-- Category Navigation -->
   <section class="sticky top-20 z-40 bg-white shadow-md">
-    <div class="max-w-5xl mx-auto px-4">
-      <div class="flex justify-center gap-2 py-3 overflow-x-auto">
-        {categories.map((cat) => (
-          <a
-            href={`#${cat.title.toLowerCase().replace(' ', '-')}`}
-            class="px-4 py-2 rounded-full bg-stone-100 hover:bg-bronze-100 text-stone-700 hover:text-bronze-700 font-medium text-sm whitespace-nowrap transition-colors"
-          >
-            {cat.icon} {cat.title}
-          </a>
-        ))}
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex gap-4 py-3 overflow-x-auto">
+        <a href="#food" class="px-4 py-2 rounded-full bg-bronze-500 text-white font-medium text-sm whitespace-nowrap">
+          🍜 Food
+        </a>
+        <a href="#drinks" class="px-4 py-2 rounded-full bg-stone-100 hover:bg-bronze-100 text-stone-700 font-medium text-sm whitespace-nowrap">
+          🍹 Drinks
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Menu Sections -->
-  <section class="py-12 bg-stone-50">
-    <div class="max-w-5xl mx-auto px-4">
-      {categories.map((category) => (
-        <div id={category.title.toLowerCase().replace(' ', '-')} class="mb-16 scroll-mt-32">
-          <div class="flex items-center gap-3 mb-8">
-            <span class="text-4xl">{category.icon}</span>
-            <h2 class="text-3xl font-serif font-bold text-stone-800">{category.title}</h2>
+  <!-- Food Section -->
+  <section id="food" class="py-12 bg-stone-50">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">🍜 Food Menu</h2>
+
+      {foodCategories.map((category) => (
+        <div class="mb-16">
+          <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+            <h3 class="text-2xl font-serif font-bold text-stone-800">{category.title}</h3>
+            <span class="text-stone-500 text-lg">{category.titleThai}</span>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {category.items.map((item) => (
-              <div class="bg-white rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow flex justify-between items-start">
-                <div class="flex-1">
-                  <h3 class="font-semibold text-stone-800 text-lg">{item.name}</h3>
-                  <p class="text-stone-500 text-sm mt-1">{item.desc}</p>
-                </div>
-                <div class="ml-4 text-right">
-                  <span class="text-bronze-600 font-bold text-lg">{item.price}</span>
-                  <span class="text-stone-400 text-sm ml-1">฿</span>
+              <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
+                {item.img && (
+                  <div class="aspect-[4/3] overflow-hidden">
+                    <img src={item.img} alt={item.name} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
+                  </div>
+                )}
+                <div class="p-4">
+                  <div class="flex justify-between items-start mb-1">
+                    <div>
+                      <h4 class="font-semibold text-stone-800">{item.name}</h4>
+                      {item.nameThai && <p class="text-stone-400 text-sm">{item.nameThai}</p>}
+                    </div>
+                    <span class="text-bronze-600 font-bold text-lg">{item.price}฿</span>
+                  </div>
+                  {item.desc && <p class="text-stone-500 text-sm mt-1">{item.desc}</p>}
+                  {item.options && <p class="text-bronze-500 text-xs mt-2">{item.options}</p>}
                 </div>
               </div>
             ))}
           </div>
         </div>
       ))}
+    </div>
+  </section>
+
+  <!-- Drinks Section -->
+  <section id="drinks" class="py-12 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+      <h2 class="text-4xl font-serif font-bold text-stone-800 mb-8 text-center">🍹 Drink Menu</h2>
+
+      <!-- Smoothies -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+          <h3 class="text-2xl font-serif font-bold text-stone-800">{smoothies.title}</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {smoothies.items.map((item) => (
+            <div class="bg-stone-50 rounded-xl p-4 text-center hover:shadow-md transition-shadow">
+              <h4 class="font-semibold text-stone-800">{item.name}</h4>
+              <span class="text-bronze-600 font-bold">{item.price}฿</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Coffee -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+          <h3 class="text-2xl font-serif font-bold text-stone-800">{drinks.title}</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-stone-50 rounded-xl overflow-hidden">
+            <thead class="bg-bronze-500 text-white">
+              <tr>
+                <th class="px-4 py-3 text-left">Item</th>
+                {drinks.columns.map((col) => (
+                  <th class="px-4 py-3 text-center">{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {drinks.items.map((item, i) => (
+                <tr class={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
+                  <td class="px-4 py-3 font-medium">{item.name}</td>
+                  {item.prices.map((price) => (
+                    <td class="px-4 py-3 text-center text-bronze-600 font-semibold">
+                      {price === '-' ? '-' : `${price}฿`}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tea & Milk -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+          <h3 class="text-2xl font-serif font-bold text-stone-800">{teaMilk.title}</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full bg-stone-50 rounded-xl overflow-hidden">
+            <thead class="bg-bronze-500 text-white">
+              <tr>
+                <th class="px-4 py-3 text-left">Item</th>
+                {teaMilk.columns.map((col) => (
+                  <th class="px-4 py-3 text-center">{col}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {teaMilk.items.map((item, i) => (
+                <tr class={i % 2 === 0 ? 'bg-white' : 'bg-stone-50'}>
+                  <td class="px-4 py-3">
+                    <span class="font-medium">{item.name}</span>
+                    {item.nameThai && <span class="text-stone-400 text-sm ml-2">{item.nameThai}</span>}
+                  </td>
+                  {item.prices.map((price) => (
+                    <td class="px-4 py-3 text-center text-bronze-600 font-semibold">{price}฿</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ice Cream -->
+      <div class="mb-12">
+        <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+          <h3 class="text-2xl font-serif font-bold text-stone-800">{iceCream.title}</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {iceCream.items.map((item) => (
+            <div class="bg-stone-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-semibold text-stone-800">{item.name}</h4>
+                  {item.desc && <p class="text-stone-400 text-sm">{item.desc}</p>}
+                </div>
+                <span class="text-bronze-600 font-bold">{item.price}฿</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Other Drinks -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-6 border-b-2 border-bronze-300 pb-2">
+          <h3 class="text-2xl font-serif font-bold text-stone-800">{otherDrinks.title}</h3>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {otherDrinks.items.map((item) => (
+            <div class="bg-stone-50 rounded-xl p-4 hover:shadow-md transition-shadow">
+              <div class="flex justify-between items-center">
+                <div>
+                  <h4 class="font-semibold text-stone-800">{item.name}</h4>
+                  {item.nameThai && <span class="text-stone-400 text-sm ml-1">{item.nameThai}</span>}
+                  {item.desc && <p class="text-stone-400 text-sm">{item.desc}</p>}
+                </div>
+                <span class="text-bronze-600 font-bold">{item.price}฿</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <!-- Note -->
       <div class="bg-bronze-50 border border-bronze-200 rounded-xl p-6 text-center">
         <p class="text-bronze-800">
-          <strong>Note:</strong> Prices are in Thai Baht (฿). Menu items may vary based on availability.
+          <strong>Note:</strong> All prices in Thai Baht (฿). Menu items may vary based on availability.
         </p>
       </div>
     </div>
@@ -172,10 +437,3 @@ const categories = [drinks, thaiFood, westernFood, snacks];
 
   <Footer />
 </Layout>
-
-<style>
-  /* Smooth scroll */
-  html {
-    scroll-behavior: smooth;
-  }
-</style>
