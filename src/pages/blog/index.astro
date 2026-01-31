@@ -1,0 +1,96 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+
+const posts = [
+  {
+    slug: 'what-is-aufguss',
+    title: 'What is Aufguss? The German Sauna Ritual Explained',
+    excerpt: 'Discover the centuries-old German sauna tradition that transforms a simple sauna visit into a sensory masterpiece. Learn about the art of Aufguss and where to experience it in Thailand.',
+    date: '2025-01-15',
+    readingTime: '5 min read',
+    image: '/images/03-aufguss-frau-kelle.jpg',
+    imageAlt: 'Sauna master performing Aufguss ritual',
+  },
+  {
+    slug: 'best-sauna-pattaya',
+    title: 'Best Sauna in Pattaya: Complete Guide 2025',
+    excerpt: 'Looking for the best sauna experience in Pattaya? This guide covers what to look for, what to expect, and why Pattaya has become a surprising wellness destination in Southeast Asia.',
+    date: '2025-01-10',
+    readingTime: '6 min read',
+    image: '/images/05-sauna-led-beleuchtung.jpg',
+    imageAlt: 'Finnish sauna with LED ambiance lighting',
+  },
+  {
+    slug: 'ice-bath-benefits',
+    title: 'Ice Bath Benefits: Why Cold Exposure Changes Your Life',
+    excerpt: 'From reduced inflammation to improved mental resilience, the science behind ice baths is compelling. Here is what happens to your body when you take the plunge.',
+    date: '2025-01-05',
+    readingTime: '5 min read',
+    image: '/images/08-ice-bath-gast.jpg',
+    imageAlt: 'Guest enjoying an ice bath',
+  },
+];
+
+const formattedDate = (date: string) =>
+  new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+---
+
+<Layout title="Blog" description="Sauna tips, wellness guides, and news from Hera Sauna Pattaya. Learn about Aufguss, ice baths, and the best sauna experiences in Thailand.">
+  <Navigation />
+
+  <!-- Hero -->
+  <section class="relative pt-32 pb-20 bg-stone-800">
+    <div class="absolute inset-0 opacity-20">
+      <img src="/images/12-liegestuehle-sonnenuntergang.jpg" alt="" class="w-full h-full object-cover" />
+    </div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Blog & Wellness Guides</h1>
+      <p class="text-lg text-stone-300 max-w-2xl mx-auto">
+        Tips on sauna culture, cold exposure, and getting the most out of your wellness journey.
+      </p>
+    </div>
+  </section>
+
+  <!-- Posts Grid -->
+  <section class="py-16 bg-stone-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map((post) => (
+          <a href={`/blog/${post.slug}`} class="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="aspect-[16/10] overflow-hidden">
+              <img
+                src={post.image}
+                alt={post.imageAlt}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-3 text-sm text-stone-500 mb-3">
+                <time datetime={post.date}>{formattedDate(post.date)}</time>
+                <span class="w-1 h-1 rounded-full bg-stone-300"></span>
+                <span>{post.readingTime}</span>
+              </div>
+              <h2 class="text-xl font-serif font-bold text-stone-800 mb-3 group-hover:text-bronze-600 transition-colors">
+                {post.title}
+              </h2>
+              <p class="text-stone-600 text-sm leading-relaxed">
+                {post.excerpt}
+              </p>
+              <span class="inline-block mt-4 text-bronze-600 font-medium text-sm group-hover:translate-x-1 transition-transform">
+                Read article &rarr;
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
