@@ -23,3 +23,5 @@ Thumbs.db
 # Large files (will be handled by git lfs or external hosting)
 *.mp4
 *.mov
+# Allow web-optimized hero video (3.4MB)
+!public/videos/hero-drone.mp4
