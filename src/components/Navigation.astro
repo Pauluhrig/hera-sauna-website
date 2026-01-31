@@ -9,7 +9,7 @@ const navItems = [
 ];
 ---
 
-<nav class="fixed w-full z-50 transition-all duration-300" id="main-nav">
+<nav class="fixed w-full z-50 transition-all duration-300 bg-stone-900/80 backdrop-blur-md" id="main-nav">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <!-- Logo -->
@@ -74,12 +74,14 @@ const navItems = [
     menu?.classList.toggle('hidden');
   });
 
-  // Add background on scroll
+  // Darken background on scroll
   window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
-      nav?.classList.add('bg-stone-900/95', 'backdrop-blur-md', 'shadow-lg');
+      nav?.classList.remove('bg-stone-900/80');
+      nav?.classList.add('bg-stone-900/95', 'shadow-lg');
     } else {
-      nav?.classList.remove('bg-stone-900/95', 'backdrop-blur-md', 'shadow-lg');
+      nav?.classList.remove('bg-stone-900/95', 'shadow-lg');
+      nav?.classList.add('bg-stone-900/80');
     }
   });
 </script>

@@ -45,9 +45,11 @@ const facilities = [
       <div class="text-center max-w-4xl">
         <!-- Text with background blur - animated on load -->
         <div class="hero-content bg-black/40 backdrop-blur-sm rounded-2xl px-8 py-10 md:px-12 md:py-12">
-          <h1 class="text-5xl md:text-7xl font-serif font-bold mb-4 hero-title">
-            <span class="text-bronze-400">HERA</span> SAUNA
-          </h1>
+          <div class="logo-animation-wrapper h-28 md:h-40 mx-auto mb-4" id="hero-logo-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39240 29220" class="h-full w-auto mx-auto" id="hero-logo" aria-label="Hera Sauna">
+              <g transform="translate(0,29220) scale(1,-1)" id="logo-paths"></g>
+            </svg>
+          </div>
           <p class="text-xl md:text-2xl text-white mb-2">
             Pattaya's Premier Wellness Destination
           </p>
@@ -123,7 +125,7 @@ const facilities = [
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
@@ -135,7 +137,7 @@ const facilities = [
           </p>
         </div>
 
-        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -147,7 +149,7 @@ const facilities = [
           </p>
         </div>
 
-        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-shadow">
+        <div class="bg-stone-50 p-8 rounded-2xl text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
           <div class="w-16 h-16 bg-bronze-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg class="w-8 h-8 text-bronze-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -166,7 +168,7 @@ const facilities = [
   <section class="py-20 bg-stone-800 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div>
+        <div data-animate="slide-left">
           <p class="text-bronze-400 font-medium mb-2 uppercase tracking-wide">Our Signature Experience</p>
           <h2 class="text-4xl font-serif font-bold mb-6">
             What is a Sauna Session?
@@ -181,7 +183,7 @@ const facilities = [
             Learn More About Sessions
           </a>
         </div>
-        <div class="relative">
+        <div class="relative" data-animate="slide-right">
           <img
             src="/images/03-aufguss-frau-kelle.jpg"
             alt="Sauna Session"
@@ -200,17 +202,17 @@ const facilities = [
   <section class="py-20 bg-stone-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
-        <h2 class="text-4xl font-serif font-bold text-stone-800 mb-4">
+        <h2 class="text-4xl font-serif font-bold text-stone-800 mb-4" data-animate="fade-up">
           Our Facilities
         </h2>
-        <p class="text-lg text-stone-600 max-w-2xl mx-auto">
+        <p class="text-lg text-stone-600 max-w-2xl mx-auto" data-animate="fade-up">
           Everything you need for the ultimate relaxation experience
         </p>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {facilities.map((facility) => (
-          <div class="group relative overflow-hidden rounded-2xl shadow-lg aspect-[4/3]">
+        {facilities.map((facility, i) => (
+          <div class="group relative overflow-hidden rounded-2xl shadow-lg aspect-[4/3]" data-animate="fade-up" data-stagger={i}>
             <img
               src={facility.src}
               alt={facility.title}
@@ -237,7 +239,7 @@ const facilities = [
   <!-- Testimonial/Review Style Section -->
   <section class="py-20 bg-white">
     <div class="max-w-4xl mx-auto px-4 text-center">
-      <div class="mb-8">
+      <div class="mb-8" data-animate="scale-up">
         <div class="flex justify-center gap-1 text-bronze-500 text-2xl mb-4">
           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
         </div>
@@ -260,10 +262,10 @@ const facilities = [
       <div class="absolute inset-0 bg-stone-900/70"></div>
     </div>
     <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
-      <h2 class="text-4xl font-serif font-bold mb-6">
+      <h2 class="text-4xl font-serif font-bold mb-6" data-animate="fade-up">
         Ready for Ultimate Relaxation?
       </h2>
-      <p class="text-xl text-stone-200 mb-8">
+      <p class="text-xl text-stone-200 mb-8" data-animate="fade-up">
         Visit us today and discover why Hera Sauna is Pattaya's best-kept wellness secret.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
@@ -330,6 +332,124 @@ const facilities = [
       showSlide(currentSlide);
     });
   });
+
+  // ===== Logo Stroke Draw Animation =====
+  (async function() {
+    const container = document.getElementById('logo-paths');
+    if (!container) return;
+
+    // Fetch the SVG path data
+    const resp = await fetch('/images/logo-animated.svg');
+    const text = await resp.text();
+    const parser = new DOMParser();
+    const svgDoc = parser.parseFromString(text, 'image/svg+xml');
+    const paths = svgDoc.querySelectorAll('.logo-stroke');
+
+    // Extract unique path data (skip duplicates from fill layer)
+    const pathDataList: string[] = [];
+    paths.forEach(p => {
+      const d = p.getAttribute('d');
+      if (d && !pathDataList.includes(d)) pathDataList.push(d);
+    });
+
+    // Create stroke paths and fill paths
+    const strokePaths: SVGPathElement[] = [];
+
+    pathDataList.forEach((d, i) => {
+      const sp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      sp.setAttribute('d', d);
+      sp.setAttribute('fill', 'none');
+      sp.setAttribute('stroke', '#caa880');
+      sp.setAttribute('stroke-width', '50');
+      container.appendChild(sp);
+
+      const len = sp.getTotalLength();
+      sp.style.strokeDasharray = `${len}`;
+      sp.style.strokeDashoffset = `${len}`;
+      sp.style.transition = `stroke-dashoffset 2s ease-in-out ${i * 0.08}s`;
+      strokePaths.push(sp);
+    });
+
+    const strokePaths2 = strokePaths; // reference for fill phase
+    const fillPaths: SVGPathElement[] = [];
+
+    pathDataList.forEach((d, i) => {
+      const fp = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      fp.setAttribute('d', d);
+      fp.setAttribute('fill', '#caa880');
+      fp.setAttribute('stroke', 'none');
+      fp.style.opacity = '0';
+      fp.style.transition = `opacity 0.8s ease-in-out ${2 + i * 0.04}s`;
+      container.appendChild(fp);
+      fillPaths.push(fp);
+    });
+
+    // Trigger stroke animation
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        strokePaths.forEach(sp => { sp.style.strokeDashoffset = '0'; });
+        fillPaths.forEach(fp => { fp.style.opacity = '1'; });
+
+        // After fill, hide strokes
+        setTimeout(() => {
+          strokePaths2.forEach(sp => {
+            sp.style.transition = 'opacity 0.5s ease';
+            sp.style.opacity = '0';
+          });
+        }, 3500);
+      });
+    });
+  })();
+
+  // ===== Scroll Animations =====
+  function initScrollAnimations() {
+    const els = document.querySelectorAll('[data-animate]');
+    if (!els.length) return;
+
+    // Step 1: Hide elements that are NOT already in viewport
+    els.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+      if (inViewport) {
+        // Already visible — don't hide, just mark as done
+        el.classList.add('scroll-visible');
+      } else {
+        // Below the fold — hide and wait for scroll
+        const stagger = (el as HTMLElement).dataset.stagger;
+        if (stagger) {
+          (el as HTMLElement).style.transitionDelay = `${parseInt(stagger) * 100}ms`;
+        }
+        el.classList.add('scroll-hidden');
+      }
+    });
+
+    // Step 2: Observe hidden elements
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.remove('scroll-hidden');
+          entry.target.classList.add('scroll-visible');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.05,
+      rootMargin: '0px 0px 100px 0px'
+    });
+
+    els.forEach(el => {
+      if (!el.classList.contains('scroll-visible')) {
+        obs.observe(el);
+      }
+    });
+  }
+
+  // Run after layout
+  if (document.readyState === 'complete') {
+    initScrollAnimations();
+  } else {
+    window.addEventListener('load', initScrollAnimations);
+  }
 </script>
 
 <style>
@@ -353,6 +473,40 @@ const facilities = [
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /* ===== Logo Stroke Drawing Animation ===== */
+  .logo-animation-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Golden shimmer sweep after draw */
+  .logo-animation-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(202, 168, 128, 0.5), transparent);
+    animation: shimmerSweep 1.2s ease-in-out 3.2s forwards;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes shimmerSweep {
+    0% {
+      left: -60%;
+      opacity: 1;
+    }
+    100% {
+      left: 120%;
+      opacity: 1;
     }
   }
 </style>

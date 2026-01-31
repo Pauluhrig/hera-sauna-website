@@ -27,3 +27,34 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ===== Scroll Animations ===== */
+/* JS adds .scroll-ready class, then hides elements. Fallback: everything visible. */
+
+[data-animate].scroll-hidden {
+  opacity: 0;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+[data-animate="fade-up"].scroll-hidden {
+  transform: translateY(50px);
+}
+
+[data-animate="slide-left"].scroll-hidden {
+  transform: translateX(-60px);
+}
+
+[data-animate="slide-right"].scroll-hidden {
+  transform: translateX(60px);
+}
+
+[data-animate="scale-up"].scroll-hidden {
+  transform: scale(0.85);
+}
+
+/* Animated state - triggered by observer */
+[data-animate].scroll-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
