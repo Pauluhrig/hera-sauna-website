@@ -23,10 +23,24 @@ const facilities = [
 <Layout title="Home" description="Hera Sauna Pattaya - Experience authentic sauna sessions with our signature Aufguss ritual. The only event sauna in Thailand.">
   <Navigation />
 
-  <!-- Hero Section with Slideshow -->
+  <!-- Hero Section with Video Background -->
   <section class="relative h-screen">
-    <!-- Image Slideshow -->
-    <div class="absolute inset-0 z-0" id="hero-slideshow">
+    <!-- Video Background (desktop only) -->
+    <div class="absolute inset-0 z-0 hidden md:block">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/images/01-hero-sauna-frau.jpg"
+        class="w-full h-full object-cover"
+      >
+        <source src="/videos/hero-drone.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Image Slideshow (mobile fallback) -->
+    <div class="absolute inset-0 z-0 md:hidden" id="hero-slideshow">
       {heroSlides.map((slide, i) => (
         <div class={`absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`} data-slide={i}>
           <img
@@ -36,9 +50,10 @@ const facilities = [
           />
         </div>
       ))}
-      <!-- Lighter overlay for better image visibility -->
-      <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50"></div>
     </div>
+
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50 z-[1]"></div>
 
     <!-- Hero Content -->
     <div class="relative z-10 h-full flex flex-col items-center justify-center text-white px-4">
@@ -74,8 +89,8 @@ const facilities = [
       </div>
     </div>
 
-    <!-- Slide Indicators -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+    <!-- Slide Indicators (mobile only) -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 md:hidden">
       {heroSlides.map((_, i) => (
         <button
           class={`w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
