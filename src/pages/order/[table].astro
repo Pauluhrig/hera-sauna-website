@@ -1,0 +1,388 @@
+---
+export const prerender = false;
+
+import '../../styles/global.css';
+import { tables } from '../../config/tables';
+import { getAllOrderableItems } from '../../data/menu';
+
+const { table } = Astro.params;
+const token = Astro.url.searchParams.get('token');
+
+// Parse table number
+const tableNum = parseInt(table?.replace('t', '') ?? '0');
+
+// Validate table and token
+const tableConfig = tables[tableNum];
+if (!tableConfig || tableConfig.token !== token || tableNum < 1 || tableNum > 15) {
+  return Astro.redirect('/');
+}
+
+const items = getAllOrderableItems();
+
+// Group items by category
+const grouped = new Map<string, typeof items>();
+for (const item of items) {
+  if (!grouped.has(item.category)) {
+    grouped.set(item.category, []);
+  }
+  grouped.get(item.category)!.push(item);
+}
+const categories = Array.from(grouped.entries());
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Table {tableNum} - Order | Hera Sauna</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-stone-50 text-stone-800 font-sans">
+    <!-- Header -->
+    <header class="bg-stone-800 text-white py-4 px-4 sticky top-0 z-50 shadow-lg">
+      <div class="max-w-lg mx-auto flex items-center justify-between">
+        <div>
+          <h1 class="text-lg font-serif font-bold text-bronze-400">Hera Sauna</h1>
+          <p class="text-xs text-stone-400">Table {tableNum}</p>
+        </div>
+        <div id="header-total" class="text-right hidden">
+          <p class="text-xs text-stone-400">Total</p>
+          <p class="text-lg font-bold text-bronze-400"><span id="header-total-amount">0</span>&#3647;</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Category tabs -->
+    <nav class="bg-white shadow-sm sticky top-[72px] z-40">
+      <div class="max-w-lg mx-auto overflow-x-auto">
+        <div class="flex gap-1 p-2" id="category-tabs">
+          {categories.map(([catName], i) => (
+            <button
+              data-cat={i}
+              class:list={[
+                "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors",
+                i === 0 ? "bg-bronze-500 text-white" : "bg-stone-100 text-stone-600"
+              ]}
+            >
+              {catName}
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+
+    <!-- Menu items -->
+    <main class="max-w-lg mx-auto px-4 pb-36 pt-4">
+      {categories.map(([catName, catItems], catIdx) => (
+        <section data-category={catIdx} class:list={[catIdx !== 0 && "hidden"]}>
+          <h2 class="text-xl font-serif font-bold text-stone-800 mb-3 border-b-2 border-bronze-300 pb-1">
+            {catName}
+          </h2>
+          <div class="space-y-2">
+            {catItems.map((item) => (
+              <div
+                class="bg-white rounded-lg p-3 shadow-sm flex items-center justify-between gap-3"
+                data-item-id={item.id}
+                data-item-name={item.name}
+                data-item-price={item.price}
+              >
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-baseline gap-2">
+                    <h3 class="font-medium text-sm text-stone-800 truncate">{item.name}</h3>
+                    <span class="text-bronze-600 font-bold text-sm shrink-0">{item.price}&#3647;</span>
+                  </div>
+                  {item.nameThai && <p class="text-stone-400 text-xs">{item.nameThai}</p>}
+                  {item.desc && <p class="text-stone-500 text-xs">{item.desc}</p>}
+                  {item.options && <p class="text-bronze-500 text-xs mt-0.5">{item.options}</p>}
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <button
+                    data-action="decrement"
+                    data-target={item.id}
+                    class="w-8 h-8 rounded-full bg-stone-200 text-stone-600 font-bold text-lg flex items-center justify-center hover:bg-stone-300 transition-colors hidden"
+                    aria-label={`Remove one ${item.name}`}
+                  >-</button>
+                  <span
+                    data-qty={item.id}
+                    class="w-5 text-center font-bold text-sm hidden"
+                  >0</span>
+                  <button
+                    data-action="increment"
+                    data-target={item.id}
+                    class="w-8 h-8 rounded-full bg-bronze-500 text-white font-bold text-lg flex items-center justify-center hover:bg-bronze-600 transition-colors"
+                    aria-label={`Add one ${item.name}`}
+                  >+</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </main>
+
+    <!-- Sticky bottom bar -->
+    <div id="order-bar" class="fixed bottom-0 left-0 right-0 bg-stone-800 text-white shadow-2xl transform translate-y-full transition-transform duration-300 z-50">
+      <div class="max-w-lg mx-auto px-4 py-4">
+        <div class="flex items-center justify-between mb-3">
+          <div>
+            <p class="text-sm text-stone-400"><span id="item-count">0</span> items</p>
+            <p class="text-2xl font-bold text-bronze-400"><span id="total-amount">0</span>&#3647;</p>
+          </div>
+          <button
+            id="place-order-btn"
+            class="bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors text-sm"
+          >
+            Place Order
+          </button>
+        </div>
+        <button
+          id="view-order-btn"
+          class="w-full text-xs text-stone-400 underline"
+        >
+          View order details
+        </button>
+      </div>
+    </div>
+
+    <!-- Order summary overlay -->
+    <div id="order-summary" class="fixed inset-0 bg-black/60 z-[60] hidden">
+      <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl max-h-[80vh] overflow-y-auto">
+        <div class="max-w-lg mx-auto px-4 py-6">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-serif font-bold text-stone-800">Your Order</h2>
+            <button id="close-summary" class="text-stone-400 hover:text-stone-600 text-2xl">&times;</button>
+          </div>
+          <div id="summary-items" class="space-y-2 mb-4"></div>
+          <div class="border-t-2 border-stone-200 pt-3 flex items-center justify-between">
+            <span class="font-bold text-stone-800">Total</span>
+            <span class="text-xl font-bold text-bronze-600"><span id="summary-total">0</span>&#3647;</span>
+          </div>
+          <button
+            id="summary-place-order"
+            class="w-full mt-4 bg-bronze-500 hover:bg-bronze-600 text-white font-semibold py-3 rounded-lg transition-colors"
+          >
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order confirmation overlay -->
+    <div id="order-confirmation" class="fixed inset-0 bg-black/60 z-[70] hidden">
+      <div class="absolute inset-x-4 top-1/2 -translate-y-1/2 bg-white rounded-2xl max-w-lg mx-auto p-6 text-center">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h2 class="text-xl font-serif font-bold text-stone-800 mb-2">Order Placed!</h2>
+        <p class="text-stone-500 mb-1">Your order has been sent to the kitchen.</p>
+        <p class="text-sm text-stone-400 mb-4" id="order-id-display"></p>
+        <button
+          id="new-order-btn"
+          class="bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-6 py-3 rounded-lg transition-colors"
+        >
+          New Order
+        </button>
+      </div>
+    </div>
+
+    <!-- Sending overlay -->
+    <div id="sending-overlay" class="fixed inset-0 bg-black/60 z-[80] hidden flex items-center justify-center">
+      <div class="bg-white rounded-2xl p-8 text-center">
+        <div class="w-10 h-10 border-4 border-bronze-500 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+        <p class="text-stone-600 font-medium">Sending order...</p>
+      </div>
+    </div>
+
+    <script define:vars={{ tableNum }}>
+      const TABLE = tableNum;
+      const order = {};
+
+      // DOM references
+      const orderBar = document.getElementById('order-bar');
+      const headerTotal = document.getElementById('header-total');
+      const headerTotalAmount = document.getElementById('header-total-amount');
+      const itemCount = document.getElementById('item-count');
+      const totalAmount = document.getElementById('total-amount');
+      const summaryItems = document.getElementById('summary-items');
+      const summaryTotal = document.getElementById('summary-total');
+      const orderSummary = document.getElementById('order-summary');
+      const orderConfirmation = document.getElementById('order-confirmation');
+      const sendingOverlay = document.getElementById('sending-overlay');
+      const orderIdDisplay = document.getElementById('order-id-display');
+
+      function updateUI() {
+        let total = 0;
+        let count = 0;
+
+        for (const [id, data] of Object.entries(order)) {
+          if (data.qty > 0) {
+            total += data.qty * data.price;
+            count += data.qty;
+          }
+        }
+
+        // Update item quantity displays
+        document.querySelectorAll('[data-item-id]').forEach(el => {
+          const id = el.dataset.itemId;
+          const qty = order[id]?.qty || 0;
+          const qtyEl = el.querySelector(`[data-qty="${id}"]`);
+          const decBtn = el.querySelector(`[data-action="decrement"][data-target="${id}"]`);
+
+          if (qty > 0) {
+            qtyEl.textContent = qty;
+            qtyEl.classList.remove('hidden');
+            decBtn.classList.remove('hidden');
+          } else {
+            qtyEl.classList.add('hidden');
+            decBtn.classList.add('hidden');
+          }
+        });
+
+        // Update totals
+        itemCount.textContent = count;
+        totalAmount.textContent = total;
+        headerTotalAmount.textContent = total;
+        summaryTotal.textContent = total;
+
+        // Show/hide order bar
+        if (count > 0) {
+          orderBar.classList.remove('translate-y-full');
+          headerTotal.classList.remove('hidden');
+        } else {
+          orderBar.classList.add('translate-y-full');
+          headerTotal.classList.add('hidden');
+        }
+      }
+
+      function renderSummary() {
+        summaryItems.innerHTML = '';
+        for (const [id, data] of Object.entries(order)) {
+          if (data.qty > 0) {
+            const row = document.createElement('div');
+            row.className = 'flex items-center justify-between text-sm';
+            row.innerHTML = `
+              <span class="text-stone-700">${data.qty}x ${data.name}</span>
+              <span class="text-stone-600 font-medium">${data.qty * data.price}&#3647;</span>
+            `;
+            summaryItems.appendChild(row);
+          }
+        }
+      }
+
+      // Category tabs
+      document.getElementById('category-tabs').addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-cat]');
+        if (!btn) return;
+        const idx = btn.dataset.cat;
+
+        // Update tab styles
+        document.querySelectorAll('#category-tabs button').forEach(b => {
+          b.className = 'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-stone-100 text-stone-600';
+        });
+        btn.className = 'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors bg-bronze-500 text-white';
+
+        // Show/hide sections
+        document.querySelectorAll('[data-category]').forEach(s => {
+          s.classList.toggle('hidden', s.dataset.category !== idx);
+        });
+      });
+
+      // Increment/decrement
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-action]');
+        if (!btn) return;
+
+        const id = btn.dataset.target;
+        const itemEl = document.querySelector(`[data-item-id="${id}"]`);
+        const name = itemEl.dataset.itemName;
+        const price = parseInt(itemEl.dataset.itemPrice);
+
+        if (!order[id]) {
+          order[id] = { name, price, qty: 0 };
+        }
+
+        if (btn.dataset.action === 'increment') {
+          order[id].qty++;
+        } else {
+          order[id].qty = Math.max(0, order[id].qty - 1);
+          if (order[id].qty === 0) delete order[id];
+        }
+
+        updateUI();
+      });
+
+      // View order details
+      document.getElementById('view-order-btn').addEventListener('click', () => {
+        renderSummary();
+        orderSummary.classList.remove('hidden');
+      });
+
+      document.getElementById('close-summary').addEventListener('click', () => {
+        orderSummary.classList.add('hidden');
+      });
+
+      // Close summary on backdrop click
+      orderSummary.addEventListener('click', (e) => {
+        if (e.target === orderSummary) orderSummary.classList.add('hidden');
+      });
+
+      // Place order
+      async function placeOrder() {
+        const items = [];
+        let total = 0;
+        for (const [id, data] of Object.entries(order)) {
+          if (data.qty > 0) {
+            items.push({ name: data.name, quantity: data.qty, price: data.price });
+            total += data.qty * data.price;
+          }
+        }
+
+        if (items.length === 0) return;
+
+        orderSummary.classList.add('hidden');
+        sendingOverlay.classList.remove('hidden');
+
+        try {
+          const res = await fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ table: TABLE, items, total }),
+          });
+
+          const data = await res.json();
+
+          sendingOverlay.classList.add('hidden');
+
+          if (data.success) {
+            orderIdDisplay.textContent = `Order: ${data.orderId}`;
+            orderConfirmation.classList.remove('hidden');
+
+            // Clear order
+            for (const key of Object.keys(order)) delete order[key];
+            updateUI();
+          } else {
+            alert(data.error || 'Failed to place order. Please try again.');
+          }
+        } catch (err) {
+          sendingOverlay.classList.add('hidden');
+          alert('Network error. Please check your connection and try again.');
+        }
+      }
+
+      document.getElementById('place-order-btn').addEventListener('click', placeOrder);
+      document.getElementById('summary-place-order').addEventListener('click', placeOrder);
+
+      // New order
+      document.getElementById('new-order-btn').addEventListener('click', () => {
+        orderConfirmation.classList.add('hidden');
+      });
+    </script>
+  </body>
+</html>

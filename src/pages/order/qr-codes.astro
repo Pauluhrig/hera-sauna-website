@@ -1,0 +1,71 @@
+---
+export const prerender = true;
+
+import '../../styles/global.css';
+import { tables } from '../../config/tables';
+import QRCode from 'qrcode';
+
+const BASE_URL = 'https://hera-sauna.com';
+
+const tableEntries = await Promise.all(
+  Object.entries(tables).map(async ([num, config]) => {
+    const url = `${BASE_URL}/order/t${num}?token=${config.token}`;
+    const svg = await QRCode.toString(url, {
+      type: 'svg',
+      width: 200,
+      margin: 1,
+      color: { dark: '#1c1917', light: '#ffffff' },
+    });
+    return { num: parseInt(num), url, svg };
+  })
+);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>QR Codes - Table Orders | Hera Sauna</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+      @media print {
+        body { background: white !important; }
+        .no-print { display: none !important; }
+        .qr-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 2rem !important; }
+        .qr-card { break-inside: avoid; border: 2px solid #ccc !important; box-shadow: none !important; }
+        @page { margin: 1.5cm; }
+      }
+    </style>
+  </head>
+  <body class="bg-stone-50 text-stone-800 font-sans">
+    <!-- Header -->
+    <div class="bg-stone-800 text-white py-6 px-4 text-center no-print">
+      <h1 class="text-3xl font-serif font-bold text-bronze-400">Hera Sauna - Table QR Codes</h1>
+      <p class="text-stone-400 mt-2">Print this page and place QR codes on each table</p>
+      <button
+        onclick="window.print()"
+        class="mt-4 bg-bronze-500 hover:bg-bronze-600 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+      >
+        Print QR Codes
+      </button>
+    </div>
+
+    <!-- QR Grid -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+      <div class="qr-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {tableEntries.map(({ num, url, svg }) => (
+          <div class="qr-card bg-white rounded-xl p-4 shadow-sm text-center border border-stone-200">
+            <div class="mb-2" set:html={svg} />
+            <h2 class="text-xl font-serif font-bold text-stone-800">Table {num}</h2>
+            <p class="text-xs text-stone-400 mt-1 break-all no-print">{url}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </body>
+</html>
