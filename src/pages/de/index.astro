@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { getTranslations, getLocaleFromUrl, defaultLocale } from '../i18n/index';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslations, getLocaleFromUrl, defaultLocale } from '../../i18n/index';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
@@ -28,10 +28,24 @@ const facilities = [
 <Layout title={t.home.title} description={t.home.description} locale={locale}>
   <Navigation locale={locale} />
 
-  <!-- Hero Section with Image Slideshow -->
+  <!-- Hero Section with Video Background -->
   <section class="relative h-screen">
-    <!-- Image Slideshow -->
-    <div class="absolute inset-0 z-0" id="hero-slideshow">
+    <!-- Video Background (desktop only) -->
+    <div class="absolute inset-0 z-0 hidden md:block">
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/images/01-hero-sauna-frau.jpg"
+        class="w-full h-full object-cover"
+      >
+        <source src="/videos/hero-drone.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Image Slideshow (mobile fallback) -->
+    <div class="absolute inset-0 z-0 md:hidden" id="hero-slideshow">
       {heroSlides.map((slide, i) => (
         <div class={`absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`} data-slide={i}>
           <img
@@ -58,11 +72,8 @@ const facilities = [
           <p class="text-xl md:text-2xl text-white mb-2">
             {t.home.heroSubtitle}
           </p>
-          <p class="text-lg text-bronze-300 font-medium">
+          <p class="text-lg text-bronze-300 font-medium mb-8">
             {t.home.heroSessions}
-          </p>
-          <p class="text-sm text-bronze-400 mb-8">
-            {t.home.heroBonusSessions}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -82,8 +93,8 @@ const facilities = [
       </div>
     </div>
 
-    <!-- Slide Indicators -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+    <!-- Slide Indicators (mobile only) -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 md:hidden">
       {heroSlides.map((_, i) => (
         <button
           class={`w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-white w-8' : 'bg-white/50'}`}

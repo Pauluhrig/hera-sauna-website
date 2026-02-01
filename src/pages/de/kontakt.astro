@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { getTranslations, getLocaleFromUrl, defaultLocale } from '../i18n/index';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslations, getLocaleFromUrl, defaultLocale } from '../../i18n/index';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
@@ -64,7 +64,7 @@ const prefix = locale === defaultLocale ? '' : `/${locale}`;
                 Chonburi 20150, Thailand
               </p>
               <a
-                href="https://www.google.com/maps/search/Hera+Sauna+Pattaya"
+                href="https://maps.google.com/?q=64/148+Moo+12+Thepprasit+5+Nong+Prue+Bang+Lamung+Chonburi+20150+Thailand"
                 target="_blank"
                 class="inline-block mt-4 text-bronze-600 hover:text-bronze-700 font-medium"
               >
@@ -99,7 +99,7 @@ const prefix = locale === defaultLocale ? '' : `/${locale}`;
           <h2 class="text-3xl font-serif font-bold text-stone-800 mb-8">{t.contact.findUs}</h2>
           <div class="bg-white rounded-xl shadow-md overflow-hidden h-[500px]">
             <iframe
-              src="https://maps.google.com/maps?q=12.907294,100.887959&t=&z=17&ie=UTF8&iwloc=&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3892.5!2d100.89!3d12.93!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU1JzQ4LjAiTiAxMDDCsDUzJzI0LjAiRQ!5e0!3m2!1sen!2sth!4v1600000000000!5m2!1sen!2sth"
               width="100%"
               height="100%"
               style="border:0;"

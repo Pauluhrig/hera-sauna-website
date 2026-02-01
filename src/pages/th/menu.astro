@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { getTranslations, getLocaleFromUrl, defaultLocale } from '../i18n/index';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslations, getLocaleFromUrl, defaultLocale } from '../../i18n/index';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
@@ -201,10 +201,10 @@ const drinkCategories = [smoothies, drinks, teaMilk, iceCream, otherDrinks];
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {category.items.map((item) => (
-              <div class={`rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow ${item.img ? 'bg-white' : 'bg-white border border-stone-200'}`}>
+              <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
                 {item.img && (
                   <div class="aspect-[4/3] overflow-hidden">
-                    <img src={item.img} alt={item.name} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+                    <img src={item.img} alt={item.name} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                   </div>
                 )}
                 <div class="p-4">

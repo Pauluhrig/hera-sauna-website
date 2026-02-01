@@ -1,8 +1,8 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Footer from '../components/Footer.astro';
-import { getTranslations, getLocaleFromUrl, defaultLocale } from '../i18n/index';
+import Layout from '../../layouts/Layout.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { getTranslations, getLocaleFromUrl, defaultLocale } from '../../i18n/index';
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = getTranslations(locale);
@@ -76,10 +76,7 @@ const sessionTimes = [
           </div>
         ))}
       </div>
-      <div class="bg-white/20 rounded-xl p-4 mt-8 text-center">
-        <p class="text-white font-semibold text-lg">{t.sessions.weekendBonus}</p>
-      </div>
-      <p class="text-center text-white/90 mt-4 text-lg">
+      <p class="text-center text-white mt-8 text-lg">
         {t.sessions.sessionsIncluded}
       </p>
     </div>
