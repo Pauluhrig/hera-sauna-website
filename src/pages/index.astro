@@ -23,24 +23,10 @@ const facilities = [
 <Layout title="Best Sauna in Pattaya" description="Hera Sauna Pattaya - Finland-style sauna, Aufguss sessions, ice bath, steam room, onsen & pool. Thailand's only event sauna. Open daily 9-22, entry 220 Baht.">
   <Navigation />
 
-  <!-- Hero Section with Video Background -->
+  <!-- Hero Section with Image Slideshow -->
   <section class="relative h-screen">
-    <!-- Video Background (desktop only) -->
-    <div class="absolute inset-0 z-0 hidden md:block">
-      <video
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="/images/01-hero-sauna-frau.jpg"
-        class="w-full h-full object-cover"
-      >
-        <source src="/videos/hero-drone.mp4" type="video/mp4" />
-      </video>
-    </div>
-
-    <!-- Image Slideshow (mobile fallback) -->
-    <div class="absolute inset-0 z-0 md:hidden" id="hero-slideshow">
+    <!-- Image Slideshow -->
+    <div class="absolute inset-0 z-0" id="hero-slideshow">
       {heroSlides.map((slide, i) => (
         <div class={`absolute inset-0 transition-opacity duration-1000 ${i === 0 ? 'opacity-100' : 'opacity-0'}`} data-slide={i}>
           <img
@@ -89,8 +75,8 @@ const facilities = [
       </div>
     </div>
 
-    <!-- Slide Indicators (mobile only) -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 md:hidden">
+    <!-- Slide Indicators -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2">
       {heroSlides.map((_, i) => (
         <button
           class={`w-2 h-2 rounded-full transition-all ${i === 0 ? 'bg-white w-8' : 'bg-white/50'}`}
