@@ -1,20 +1,24 @@
 ---
-const navItems = [
-  { name: 'Home', href: '/' },
-  { name: 'Sessions', href: '/sessions' },
-  { name: 'Menu', href: '/menu' },
-  { name: 'Gallery', href: '/galerie' },
-  { name: 'Prices', href: '/preise' },
-  { name: 'Contact', href: '/kontakt' },
-  { name: 'Blog', href: '/blog' },
-];
+import { getLocaleFromUrl, getNavItems, getLocalizedPath, getBasePath, locales, localeNames, defaultLocale, type Locale } from '../i18n/index';
+import { getTranslations } from '../i18n/index';
+
+interface Props {
+  locale?: Locale;
+}
+
+const currentLocale = Astro.props.locale ?? getLocaleFromUrl(Astro.url);
+const t = getTranslations(currentLocale);
+const navItems = getNavItems(currentLocale);
+const basePath = getBasePath(Astro.url.pathname);
+const prefix = currentLocale === defaultLocale ? '' : `/${currentLocale}`;
+const kontaktHref = `${prefix}/kontakt`;
 ---
 
 <nav class="fixed w-full z-50 transition-all duration-300 bg-stone-900/80 backdrop-blur-md" id="main-nav">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <!-- Logo -->
-      <a href="/" class="flex items-center">
+      <a href={prefix || '/'} class="flex items-center">
         <img src="/images/logo.png" alt="Hera Sauna" class="h-14 w-auto" />
       </a>
 
@@ -28,11 +32,33 @@ const navItems = [
             {item.name}
           </a>
         ))}
+
+        <!-- Language Switcher -->
+        <div class="flex items-center ml-3 border-l border-white/20 pl-3 gap-1">
+          {locales.map((loc) => {
+            const href = getLocalizedPath(basePath, loc);
+            const isActive = loc === currentLocale;
+            return (
+              <a
+                href={href}
+                class={`px-2 py-1 rounded text-xs font-bold transition-all duration-200 ${
+                  isActive
+                    ? 'bg-bronze-500 text-white'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+                aria-label={`Switch to ${loc}`}
+              >
+                {localeNames[loc]}
+              </a>
+            );
+          })}
+        </div>
+
         <a
-          href="/kontakt"
+          href={kontaktHref}
           class="ml-4 bg-bronze-500 hover:bg-bronze-600 text-white px-5 py-2 rounded-lg transition-colors duration-200 font-semibold text-sm uppercase tracking-wide"
         >
-          Visit Us
+          {t.nav.visitUs}
         </a>
       </div>
 
@@ -57,11 +83,31 @@ const navItems = [
         </a>
       ))}
       <a
-        href="/kontakt"
+        href={kontaktHref}
         class="block bg-bronze-500 text-white text-center px-4 py-3 rounded-lg mt-4 font-semibold"
       >
-        Visit Us
+        {t.nav.visitUs}
       </a>
+
+      <!-- Mobile Language Switcher -->
+      <div class="flex items-center justify-center gap-2 pt-4 border-t border-white/10 mt-4">
+        {locales.map((loc) => {
+          const href = getLocalizedPath(basePath, loc);
+          const isActive = loc === currentLocale;
+          return (
+            <a
+              href={href}
+              class={`px-3 py-2 rounded text-sm font-bold transition-all duration-200 ${
+                isActive
+                  ? 'bg-bronze-500 text-white'
+                  : 'text-white/60 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {localeNames[loc]}
+            </a>
+          );
+        })}
+      </div>
     </div>
   </div>
 </nav>
